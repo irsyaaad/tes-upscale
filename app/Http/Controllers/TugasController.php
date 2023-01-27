@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Tugas;
+use App\Models\TugasTransformer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -19,12 +20,11 @@ class TugasController extends Controller
 
     public function index()
     {
-        $posts = Tugas::all();
-
+        $data = Tugas::all();
         return response()->json([
             'success' => true,
             'message' =>'List Semua Tugas',
-            'data'    => $posts
+            'data'    => $data,
         ], 200);
     }
 
@@ -51,10 +51,12 @@ class TugasController extends Controller
             ]);
 
             if ($post) {
+                $data = (new TugasTransformer)->transform($post);
+
                 return response()->json([
                     'success' => true,
                     'message' => 'Tugas Berhasil Disimpan!',
-                    'data' => $post
+                    'data' => $data
                 ], 201);
             } else {
                 return response()->json([
@@ -71,11 +73,15 @@ class TugasController extends Controller
         $post = Tugas::find($id);
 
         if ($post) {
+
+            $data = (new TugasTransformer)->transform($post);
+
             return response()->json([
                 'success'   => true,
                 'message'   => 'Detail Post!',
-                'data'      => $post
+                'data'      => $data,
             ], 200);
+
         } else {
             return response()->json([
                 'success' => false,
@@ -107,6 +113,7 @@ class TugasController extends Controller
             ]);
 
             if ($post) {
+
                 return response()->json([
                     'success' => true,
                     'message' => 'Tugas Berhasil Diupdate!',
