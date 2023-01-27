@@ -18,6 +18,6 @@ $router->get('/', function () use ($router) {
 });
 $router->get('/tugas', 'TugasController@index');
 $router->post('/tugas', 'TugasController@store');
-$router->get('/tugas/{id}', 'TugasController@show');
-$router->patch('/tugas/{id}', 'TugasController@update');
-$router->delete('/tugas/{id}', 'TugasController@destroy');
+$router->get('/tasks/{id}', 'TugasController@show');
+$router->patch('/tasks/{id}', 'TugasController@update');
+$router->delete('/tasks/{id}', 'TugasController@destroy');
